@@ -6,10 +6,11 @@ tools{
 maven 'maven'
 
 }
-
+/*
 triggers{
 pollSCM('* * * * *')
 }
+*/
 
 options{
 timestamps()
