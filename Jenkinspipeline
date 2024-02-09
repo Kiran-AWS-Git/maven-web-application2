@@ -1,18 +1,12 @@
 node{
-
-def mavenHome = tool name: "maven"
-
+ef mavenHome = tool name: "maven"
 echo "Jenkins url is: ${env.JENKINS_URL}"
 echo "Node Name is: ${env.NODE_NAME}"
 echo "Job Name is: ${env.JOB_NAME}"
-
-
-
-
 properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
-
-
-
+}
+stages
+{
 stage('CheckOutCode'){
 git branch: 'development', url: 'https://github.com/Kiran-AWS-Git/maven-web-application2.git'
 }
