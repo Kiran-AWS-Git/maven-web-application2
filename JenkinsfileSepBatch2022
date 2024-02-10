@@ -12,7 +12,7 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKe
 try{
 sendslacknotifications("STARTED")
 stage('CheckoutCode'){
-git branch: 'development', credentialsId: 'd282f55b-fad5-4318-87d4-7ae8a1bf92b2', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
+    git branch: 'development', url: 'https://github.com/Kiran-AWS-DevOps/maven-web-application.git'
 }
 
 stage('Build'){
@@ -30,9 +30,10 @@ sh "${mavenHome}/bin/mvn deploy"
 }
 
 stage('DeployAppIntoTomcatServer'){
-sshagent(['edb68cd9-21f4-4bb5-a6ae-2bd936f65b53']) {
-  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.16.144:/opt/apache-tomcat-9.0.68/webapps/"  
-}
+ sshagent(['55d1ed9b-8580-41b0-b773-65c0b452636d']) 
+	{
+   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@http://44.220.95.189:8090/opt/tomcat/webapps/"    
+  	}
 }
 */
 }//try closing
