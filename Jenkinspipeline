@@ -2,20 +2,24 @@ pipeline{
 
 agent any
 
-tools{ def mavenHome = tool name: "maven"
+tools{ tool = "maven"
 echo "Jenkins url is: ${env.JENKINS_URL}"
 echo "Node Name is: ${env.NODE_NAME}"
 echo "Job Name is: ${env.JOB_NAME}"
-properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
 }
+
 stages
 {
 stage('CheckOutCode'){
+step{
 git branch: 'development', url: 'https://github.com/Kiran-AWS-Git/maven-web-application2.git'
+}
 }
 
 stage('Build'){
+step{
 sh "${mavenHome}/bin/mvn clean package"
+}
 }
 
 /*
@@ -24,12 +28,16 @@ sh "${mavenHome}/bin/mvn clean sonar:sonar"
 }
 
 stage('UploadArtifcatsIntoArtifactoryRepo'){
+step{
 sh "${mavenHome}/bin/mvn clean deploy"
+}
 }
 
 stage('DeployAppIntoTomcatServer'){
+step{
 sshagent(['dc292b7a-3b39-4630-9fc3-1b806b54412c']) {
  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war  ec2-user@172.31.7.80:/opt/apache-tomcat-9.0.65/webapps/"
+}
 }
 */
 }
