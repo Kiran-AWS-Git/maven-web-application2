@@ -16,7 +16,7 @@ git branch: 'development', url: 'https://github.com/Kiran-AWS-Git/maven-web-appl
 
 stage('Build'){
 steps{
-sh "${mavenHome}/bin/mvn clean package"
+sh "mvn clean package"
 }
 }
 
