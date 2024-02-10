@@ -2,28 +2,27 @@ pipeline{
 
 agent any
 
-tools{ tool = "maven"
-echo "Jenkins url is: ${env.JENKINS_URL}"
-echo "Node Name is: ${env.NODE_NAME}"
-echo "Job Name is: ${env.JOB_NAME}"
+tools{ 
+maven 'maven'
 }
 
 stages
 {
 stage('CheckOutCode'){
-step{
+steps{
 git branch: 'development', url: 'https://github.com/Kiran-AWS-Git/maven-web-application2.git'
 }
 }
 
 stage('Build'){
-step{
+steps{
 sh "${mavenHome}/bin/mvn clean package"
 }
 }
 
 /*
 stage('ExecuteSonarQubeReport'){
+steps{
 sh "${mavenHome}/bin/mvn clean sonar:sonar"
 }
 
