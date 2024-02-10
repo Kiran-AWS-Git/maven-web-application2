@@ -27,7 +27,7 @@ stages{
   stage('CheckoutCode'){
   steps{
       sendSlackNotifications('STARTED')
-  git branch: "${params.BranchName}", credentialsId: 'aaa8e2c0-226a-40ba-85eb-259762d67c15', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
+ git branch: 'development', url: 'https://github.com/Kiran-AWS-DevOps/maven-web-application.git'
   }
   }
 
@@ -54,9 +54,10 @@ sh "mvn clean deploy"
 //DeployApplication into TOmcat Server
 stage('DeploApp'){
 steps{
-sshagent(['dd085870-ab36-4a86-9f5b-a915e179d45d']) {
-   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.40.86:/opt/apache-tomcat-9.0.73/webapps/"
-}
+ sshagent(['55d1ed9b-8580-41b0-b773-65c0b452636d']) 
+	{
+   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@http://44.220.95.189:8090/opt/tomcat/webapps/"    
+  	}
 }
 }
 */
